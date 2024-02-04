@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import render
 from .models import Tags, Perspectives, Events
+from .serializers import *
 
 @csrf_exempt
 @require_http_methods(["POST"])
