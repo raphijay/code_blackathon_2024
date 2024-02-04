@@ -3,4 +3,5 @@ from blackathon_2024 import views
 
 urlpatterns = [
     path("/Perspective/<int:id>/Endorse/", views.endorse),
+    path("/Perspective/<int:id>/Oppose/", views.oppose),
 ]
