@@ -13,6 +13,7 @@ class Perspectives(models.models):
     description = models.TextField()
     upboat = models.IntegerField()
     downboat = models.IntegerField()
+    year = models.IntegerField()
     tags = models.ManyToManyField(Tag, through="tag_p")
 
     def __str__(self):
