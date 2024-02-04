@@ -1,3 +1,10 @@
 from django.db import models
 
-# Create your models here.
+class Persepectives(models.models):
+
+    description = models.TextField
+    endorsment = models.IntegerField
+    title = models.TextField
+    data = models.IntegerField
+
+    
