@@ -1,12 +1,12 @@
 from django.test import TestCase
 from datetime import date, time
-from .models import Tag, Perspectives, Events
+from .models import Tags, Perspectives, Events
 
 class ModelsTestCase(TestCase):
 
     def setUp(self):
         # Create a Tag
-        self.tag = Tag.objects.create(title="Test Tag")
+        self.tag = Tags.objects.create(title="Test Tag")
 
         # Create a Perspectives instance
         self.perspective = Perspectives.objects.create(
@@ -21,7 +21,7 @@ class ModelsTestCase(TestCase):
         # Create an Events instance
         self.event = Events.objects.create(
             title="Test Event",
-            date=date(2023, 2, 4),
+            date=date(2024, 2, 4),
             time=time(12, 30),
             description="Test Event Description"
         )
