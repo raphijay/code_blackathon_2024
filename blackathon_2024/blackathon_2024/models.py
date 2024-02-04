@@ -4,7 +4,8 @@ from django.db import models
 class Tags(models.Model):
     title = models.TextField()
     in_use = models.BooleanField(default=False)
-
+    class Meta:
+        db_table = "tags"
     def __str__(self):
         return self.title
 
@@ -16,7 +17,8 @@ class Perspectives(models.Model):
     downboat = models.IntegerField()
     year = models.IntegerField()
     tags = models.ManyToManyField(Tags, through="tag_p")
-
+    class Meta:
+        db_table = "perspectives"
     def __str__(self):
         return self.title
 
@@ -28,6 +30,8 @@ class Events(models.Model):
     description = models.TextField()
     tags = models.ManyToManyField(Tags, through="tag_e")
 
+    class Meta:
+        db_table = "events"
     def __str__(self):
         return self.title
 

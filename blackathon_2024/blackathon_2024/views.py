@@ -1,3 +1,4 @@
+from django.core import serializers
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
@@ -8,13 +9,14 @@ from rest_framework.parsers import JSONParser
 
 @csrf_exempt
 @require_http_methods(["POST"])
-def endorse(request, pk):
+def endorse(request, id):
     if request.method == "POST":
         
         try:
-            upvote = Perspectives.objects.get(pk=pk)
+            upvote = Perspectives.objects.get(id=id)
             upvote.upboat += 1
             serializer = PerspectivesSerializer(upvote)
+            print(serializer.data)
             if serializer.is_valid():
                 serializer.save()
                 return JsonResponse(serializer.data)
@@ -26,11 +28,11 @@ def endorse(request, pk):
 
 @csrf_exempt
 @require_http_methods(["POST"])
-def oppose(request, pk):
+def oppose(request, id):
     if request.method == "POST":
         
         try:
-            upvote = Perspectives.objects.get(pk=pk)
+            upvote = Perspectives.objects.get(id=id)
             upvote.downboat += 1
             serializer = PerspectivesSerializer(upvote)
             if serializer.is_valid():
@@ -66,6 +68,18 @@ def addevent(request):
         return JsonResponse(serializer.errors, status=400)
     
 @csrf_exempt
+@require_http_methods(["POST"])
+def addtag(request):
+
+    if request.method == "POST":
+        data = JSONParser().parse(request)
+        serializer = TagsSerializer(data = data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data)
+        return JsonResponse(serializer.errors, status=400)
+    
+@csrf_exempt
 @require_http_methods(["GET"])
 def getperspectives_all(request):
 
@@ -88,10 +102,10 @@ def getevents_all(request):
     
 @csrf_exempt
 @require_http_methods(["GET"])
-def perspective_choice(request, pk):
+def perspective_choice(request, id):
 
     try:
-        perspective = Perspectives.objects.get(pk=pk)
+        perspective = Perspectives.objects.get(pk=id)
     except Perspectives.DoesNotExist:
         return HttpResponse(status=404)
 
@@ -102,10 +116,10 @@ def perspective_choice(request, pk):
 
 @csrf_exempt
 @require_http_methods(["GET"])
-def event_choice(request, pk):
+def event_choice(request, id):
 
     try:
-        event = Events.objects.get(pk=pk)
+        event = Events.objects.get(pk=id)
     except Events.DoesNotExist:
         return HttpResponse(status=404)
 
