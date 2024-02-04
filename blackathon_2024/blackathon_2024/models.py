@@ -5,6 +5,7 @@ class Perspectives(models.models):
     description = models.TextField
     endorsment = models.IntegerField
     title = models.TextField
+    tags = models.ManyToManyField('Tags', through="tag_")
 
 class Events(models.models):
 
@@ -12,4 +13,8 @@ class Events(models.models):
     date = models.IntegerField
     time = models.IntegerField
     description = models.TextField
-    tags = models.ManyToManyField(Tag, through="tag_")
+    tags = models.ManyToManyField('Tags', through="tag_")
+
+class Tags(models.models):
+
+    name = models.TextField

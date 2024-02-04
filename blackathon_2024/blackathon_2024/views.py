@@ -1,3 +1,16 @@
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 from django.shortcuts import render
+from .models import Tags, Perspectives, Events
 
-# Create your views here.
+@csrf_exempt
+@require_http_methods(["POST"])
+def endorse(request, pk):
+    if request.method == "POST":
+        
+        try:
+            upvote = Perspectives.objects.get(pk=pk)
+            upvote.upboat += 1
+        except Perspectives.DoesNotExist:
+            return HttpResponse(status=404)
