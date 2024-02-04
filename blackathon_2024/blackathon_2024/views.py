@@ -12,5 +12,11 @@ def endorse(request, pk):
         try:
             upvote = Perspectives.objects.get(pk=pk)
             upvote.upboat += 1
+            serializer = PerspectivesSerializer(upvote)
+            if serializer.is_valid():
+                serializer.save()
+                return JsonResponse(serializer.data)
+            else:
+                return HttpResponse(status=400)
         except Perspectives.DoesNotExist:
             return HttpResponse(status=404)
